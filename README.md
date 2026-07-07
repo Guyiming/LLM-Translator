@@ -25,12 +25,26 @@
 
 1. 点击工具栏扩展图标 →「设置」（或右键扩展 → 选项）
 2. 填写：
-   - **Base URL**：默认 `https://api.anthropic.com`。若使用代理，填代理地址（带不带 `/v1` 都行，扩展会自动归一化）
-   - **API Key**：你的 Anthropic API Key（`sk-ant-...`）。仅存储在本地 `browser.storage.local`，不上传
-   - **模型**：如 `claude-sonnet-5`、`claude-opus-4-8` 等
-   - **API Version**：默认 `2023-06-01`
+   - **API 协议**：根据服务商选择
+     - `Anthropic 风格` → 端点 `/v1/messages`，用 `x-api-key` 认证（Anthropic 官方及兼容代理）
+     - `OpenAI 风格` → 端点 `/v1/chat/completions`，用 `Authorization: Bearer` 认证（OpenAI、DeepSeek、GLM、one-api 等）
+   - **Base URL**：API 服务地址（带不带 `/v1` 都行，扩展会自动归一化）。仅存储在本地，不上传
+   - **API Key**：对应服务的密钥
+   - **模型**：如 `claude-sonnet-5`、`gpt-4o`、`deepseek-chat`、`glm-4-plus` 等
+   - **API Version**：仅 Anthropic 风格生效，默认 `2023-06-01`
 3. 点击「测试连接」验证配置
 4. 设置目标语言、源语言、并发数、Prompt 模板后保存
+
+### 常见服务商配置示例
+
+| 服务商 | 协议 | Base URL | 模型示例 |
+|--------|------|----------|----------|
+| Anthropic 官方 | Anthropic | `https://api.anthropic.com` | `claude-sonnet-5` |
+| OpenAI 官方 | OpenAI | `https://api.openai.com` | `gpt-4o` |
+| DeepSeek | OpenAI | `https://api.deepseek.com` | `deepseek-chat` |
+| 智谱 GLM | OpenAI | `https://open.bigmodel.cn/api/paas/v4` | `glm-4-plus` |
+| one-api / new-api | OpenAI | 自部署地址 | 对应模型名 |
+| OpenRouter | OpenAI | `https://openrouter.ai/api` | `openai/gpt-4o` |
 
 ## 使用
 
@@ -68,10 +82,13 @@ aitranslator/
 
 ## 关于 Base URL
 
-扩展在选项页读取用户填写的 Base URL，归一化后拼接 `/v1/messages` 调用 LLM API（Anthropic Messages 风格，同时兼容 OpenAI 风格返回）。这意味着：
+扩展在选项页读取用户填写的 Base URL，归一化（去掉结尾 `/` 与 `/v1`）后，按所选 **API 协议** 拼接端点调用 LLM API：
 
-- 官方 API：如 `https://api.anthropic.com`
-- 兼容服务：OpenAI / DeepSeek / GLM 等提供的兼容端点，填完整地址即可
+- **Anthropic 风格** → `POST {base}/v1/messages`，请求头 `x-api-key` + `anthropic-version`，解析 `content[].text`
+- **OpenAI 风格** → `POST {base}/v1/chat/completions`，请求头 `Authorization: Bearer`，解析 `choices[0].message.content`
+
+两种风格都做了返回格式的交叉兼容回退，方便接入各类代理。
+
 - 第三方代理：填代理完整地址即可（带不带 `/v1` 都行）
 - 不依赖本地 CLI，跨设备可用
 

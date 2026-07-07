@@ -53,11 +53,23 @@
   "optApiSection": {
     "message": "API Connection"
   },
+  "optProtocol": {
+    "message": "API Protocol"
+  },
+  "optProtocolAnthropic": {
+    "message": "Anthropic style (/v1/messages)"
+  },
+  "optProtocolOpenAI": {
+    "message": "OpenAI style (/v1/chat/completions)"
+  },
+  "optProtocolHint": {
+    "message": "Choose Anthropic for official/compatible Anthropic proxies; choose OpenAI for OpenAI, DeepSeek, GLM, one-api, etc."
+  },
   "optBaseUrl": {
     "message": "Base URL"
   },
   "optBaseUrlHint": {
-    "message": "Anthropic official or a compatible proxy URL"
+    "message": "API service URL (official or compatible proxy)"
   },
   "optApiKey": {
     "message": "API Key"
@@ -70,6 +82,9 @@
   },
   "optApiVersion": {
     "message": "API Version"
+  },
+  "optApiVersionHint": {
+    "message": "Anthropic style only"
   },
   "optSave": {
     "message": "Save"

@@ -10,8 +10,10 @@
 function defaultConfig() {
   return {
     baseUrl: "https://api.anthropic.com",
+    protocol: "anthropic", // "anthropic" | "openai"
     apiKey: "",
     model: "claude-sonnet-5",
+    apiVersion: "2023-06-01",
     targetLang: "zh",
     sourceLang: "auto",
     maxTokens: 1024,
@@ -65,45 +67,78 @@ function buildPrompt(text, config) {
     .replace(/\{\{text\}\}/g, text);
 }
 
-/* ---------- 调用 Anthropic Messages API ---------- */
-async function callAnthropic(text, config) {
-  const url = normalizeBaseUrl(config.baseUrl) + "/v1/messages";
+/* ---------- 解析 API 错误响应 ---------- */
+async function parseError(resp) {
+  const errText = await resp.text();
+  let msg = `HTTP ${resp.status}`;
+  try {
+    const errJson = JSON.parse(errText);
+    msg = errJson.error?.message || errJson.message || msg;
+  } catch {
+    if (errText) msg = errText.slice(0, 300);
+  }
+  return msg;
+}
 
-  const body = {
-    model: config.model,
-    max_tokens: Number(config.maxTokens) || 1024,
-    temperature: Number(config.temperature) || 0.3,
-    messages: [{ role: "user", content: buildPrompt(text, config) }],
-  };
+/* ---------- 调用 LLM API（按协议风格分支） ---------- */
+async function callLLM(text, config) {
+  const protocol = (config.protocol || "anthropic").toLowerCase();
+  const base = normalizeBaseUrl(config.baseUrl);
+  const prompt = buildPrompt(text, config);
+  const messages = [{ role: "user", content: prompt }];
 
-  const resp = await fetch(url, {
-    method: "POST",
-    headers: {
+  let url, headers, body;
+
+  if (protocol === "openai") {
+    // OpenAI 风格：/v1/chat/completions + Bearer 认证
+    url = base + "/v1/chat/completions";
+    headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${config.apiKey}`,
+    };
+    body = {
+      model: config.model,
+      max_tokens: Number(config.maxTokens) || 1024,
+      temperature: Number(config.temperature) || 0.3,
+      messages,
+    };
+  } else {
+    // Anthropic 风格：/v1/messages + x-api-key
+    url = base + "/v1/messages";
+    headers = {
       "Content-Type": "application/json",
       "x-api-key": config.apiKey,
       "anthropic-version": config.apiVersion || "2023-06-01",
-    },
+    };
+    body = {
+      model: config.model,
+      max_tokens: Number(config.maxTokens) || 1024,
+      temperature: Number(config.temperature) || 0.3,
+      messages,
+    };
+  }
+
+  const resp = await fetch(url, {
+    method: "POST",
+    headers,
     body: JSON.stringify(body),
   });
 
   if (!resp.ok) {
-    const errText = await resp.text();
-    let msg = `HTTP ${resp.status}`;
-    try {
-      const errJson = JSON.parse(errText);
-      msg = errJson.error?.message || errJson.message || msg;
-    } catch {
-      if (errText) msg = errText.slice(0, 300);
-    }
-    throw new Error(msg);
+    throw new Error(await parseError(resp));
   }
 
   const data = await resp.json();
-  // Messages API 返回 content 数组
+  // 优先按请求协议解析，但两种格式都做兼容回退
+  if (protocol === "openai" && data.choices && data.choices[0]) {
+    const c = data.choices[0].message?.content || data.choices[0].text || "";
+    return (typeof c === "string" ? c : JSON.stringify(c)).trim();
+  }
+  // Anthropic 风格：content 数组
   if (Array.isArray(data.content)) {
     return data.content.map((c) => c.text || "").join("").trim();
   }
-  // 兼容 OpenAI 风格返回
+  // 交叉兼容回退
   if (data.choices && data.choices[0]) {
     return (data.choices[0].message?.content || "").trim();
   }
@@ -153,7 +188,7 @@ browser.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   if (msg.type === "TRANSLATE_TEXT") {
     // 单段翻译请求，来自 content script
     getConfig()
-      .then((config) => callAnthropic(msg.text, config))
+      .then((config) => callLLM(msg.text, config))
       .then((translation) => {
         sendResponse({ ok: true, translation, requestId: msg.requestId });
       })

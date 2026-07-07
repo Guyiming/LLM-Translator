@@ -53,11 +53,23 @@
   "optApiSection": {
     "message": "API 连接"
   },
+  "optProtocol": {
+    "message": "API 协议"
+  },
+  "optProtocolAnthropic": {
+    "message": "Anthropic 风格 (/v1/messages)"
+  },
+  "optProtocolOpenAI": {
+    "message": "OpenAI 风格 (/v1/chat/completions)"
+  },
+  "optProtocolHint": {
+    "message": "Anthropic 官方/兼容代理选 Anthropic；OpenAI、DeepSeek、GLM、one-api 等选 OpenAI"
+  },
   "optBaseUrl": {
     "message": "Base URL"
   },
   "optBaseUrlHint": {
-    "message": "Anthropic 官方或兼容代理地址"
+    "message": "API 服务地址（官方或兼容代理）"
   },
   "optApiKey": {
     "message": "API Key"
@@ -70,6 +82,9 @@
   },
   "optApiVersion": {
     "message": "API Version"
+  },
+  "optApiVersionHint": {
+    "message": "仅 Anthropic 风格生效"
   },
   "optSave": {
     "message": "保存设置"

@@ -133,6 +133,14 @@
     <div class="section-title" data-i18n="optApiSection"></div>
 
     <div class="field">
+      <label><span data-i18n="optProtocol"></span> <span class="hint" data-i18n="optProtocolHint"></span></label>
+      <select id="protocol">
+        <option value="anthropic" data-i18n="optProtocolAnthropic"></option>
+        <option value="openai" data-i18n="optProtocolOpenAI"></option>
+      </select>
+    </div>
+
+    <div class="field">
       <label><span data-i18n="optBaseUrl"></span> <span class="hint" data-i18n="optBaseUrlHint"></span></label>
       <input type="text" id="baseUrl" placeholder="https://api.anthropic.com">
     </div>
@@ -148,7 +156,7 @@
         <input type="text" id="model" placeholder="claude-sonnet-5">
       </div>
       <div class="field">
-        <label data-i18n="optApiVersion"></label>
+        <label><span data-i18n="optApiVersion"></span> <span class="hint" data-i18n="optApiVersionHint"></span></label>
         <input type="text" id="apiVersion" value="2023-06-01" placeholder="2023-06-01">
       </div>
     </div>

@@ -3,13 +3,14 @@
  * ====================================================================== */
 
 const FIELDS = [
-  "baseUrl", "apiKey", "model", "apiVersion",
+  "baseUrl", "protocol", "apiKey", "model", "apiVersion",
   "targetLang", "sourceLang", "maxTokens", "temperature",
   "concurrency", "promptTemplate",
 ];
 
 const DEFAULTS = {
   baseUrl: "https://api.anthropic.com",
+  protocol: "anthropic",
   apiKey: "",
   model: "claude-sonnet-5",
   apiVersion: "2023-06-01",
@@ -102,20 +103,33 @@ async function test() {
     .replace(/\/+$/, "")
     .replace(/\/v1$/i, "");
 
+  const protocol = (cfg.protocol || "anthropic").toLowerCase();
+  let url, headers;
   const body = {
     model: cfg.model,
     max_tokens: 64,
     messages: [{ role: "user", content: "Reply with: OK" }],
   };
 
+  if (protocol === "openai") {
+    url = baseUrl + "/v1/chat/completions";
+    headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${cfg.apiKey}`,
+    };
+  } else {
+    url = baseUrl + "/v1/messages";
+    headers = {
+      "Content-Type": "application/json",
+      "x-api-key": cfg.apiKey,
+      "anthropic-version": cfg.apiVersion || "2023-06-01",
+    };
+  }
+
   try {
-    const resp = await fetch(baseUrl + "/v1/messages", {
+    const resp = await fetch(url, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": cfg.apiKey,
-        "anthropic-version": cfg.apiVersion || "2023-06-01",
-      },
+      headers,
       body: JSON.stringify(body),
     });
 
@@ -125,12 +139,15 @@ async function test() {
       throw new Error(msg);
     }
 
-    const reply = Array.isArray(data.content)
-      ? data.content.map((c) => c.text || "").join("")
-      : data.choices?.[0]?.message?.content || "";
+    let reply = "";
+    if (Array.isArray(data.content)) {
+      reply = data.content.map((c) => c.text || "").join("");
+    } else if (data.choices && data.choices[0]) {
+      reply = data.choices[0].message?.content || data.choices[0].text || "";
+    }
 
     resultEl.textContent =
-      browser.i18n.getMessage("optTestReplyPrefix") + reply.slice(0, 80);
+      browser.i18n.getMessage("optTestReplyPrefix") + String(reply).slice(0, 80);
     resultEl.style.color = "#27ae60";
     statusEl.textContent = browser.i18n.getMessage("optTestOk");
     statusEl.classList.remove("error");
