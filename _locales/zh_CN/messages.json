@@ -1,0 +1,178 @@
+{
+  "extName": {
+    "message": "LLM 翻译助手 (Anthropic API)"
+  },
+  "extDesc": {
+    "message": "基于 Anthropic 兼容 API 的网页双语对照翻译。保留原文，在原文下方插入译文。"
+  },
+  "actionTitle": {
+    "message": "LLM 翻译助手"
+  },
+  "ctxTranslateSelection": {
+    "message": "LLM 翻译：选中内容"
+  },
+  "ctxTranslatePage": {
+    "message": "LLM 翻译：整页"
+  },
+  "popupTitle": {
+    "message": "LLM 翻译助手"
+  },
+  "popupTranslatePage": {
+    "message": "翻译整页"
+  },
+  "popupTranslateSelection": {
+    "message": "翻译选中内容"
+  },
+  "popupSettings": {
+    "message": "设置"
+  },
+  "popupConfigured": {
+    "message": "已配置 API，可开始翻译。"
+  },
+  "popupNotConfigured": {
+    "message": "未配置 API Key，请先前往设置。"
+  },
+  "popupGoSettings": {
+    "message": "前往设置"
+  },
+  "popupNoBackend": {
+    "message": "无法连接到后台，请重试。"
+  },
+  "popupUnsupportedPage": {
+    "message": "该页面不支持翻译（浏览器内部页面）。"
+  },
+  "popupTranslateFailed": {
+    "message": "无法在该页面执行翻译："
+  },
+  "optTitle": {
+    "message": "LLM 翻译助手 - 设置"
+  },
+  "optSubtitle": {
+    "message": "配置 Anthropic 兼容 API 以启用翻译功能"
+  },
+  "optApiSection": {
+    "message": "API 连接"
+  },
+  "optBaseUrl": {
+    "message": "Base URL"
+  },
+  "optBaseUrlHint": {
+    "message": "Anthropic 官方或兼容代理地址"
+  },
+  "optApiKey": {
+    "message": "API Key"
+  },
+  "optApiKeyHint": {
+    "message": "将存储在本地，不会上传"
+  },
+  "optModel": {
+    "message": "模型"
+  },
+  "optApiVersion": {
+    "message": "API Version"
+  },
+  "optSave": {
+    "message": "保存设置"
+  },
+  "optTest": {
+    "message": "测试连接"
+  },
+  "optSaved": {
+    "message": "已保存"
+  },
+  "optTesting": {
+    "message": "测试中…"
+  },
+  "optTestOk": {
+    "message": "连接成功"
+  },
+  "optTestFail": {
+    "message": "连接失败"
+  },
+  "optTestReplyPrefix": {
+    "message": "✅ 连接成功。模型回复："
+  },
+  "optTestFailPrefix": {
+    "message": "❌ 失败："
+  },
+  "optNeedApiKey": {
+    "message": "请先填写 API Key"
+  },
+  "optTranslateSection": {
+    "message": "翻译设置"
+  },
+  "optTargetLang": {
+    "message": "目标语言"
+  },
+  "optSourceLang": {
+    "message": "源语言"
+  },
+  "optMaxTokens": {
+    "message": "Max Tokens"
+  },
+  "optMaxTokensHint": {
+    "message": "每段最大输出"
+  },
+  "optTemperature": {
+    "message": "Temperature"
+  },
+  "optConcurrency": {
+    "message": "并发数"
+  },
+  "optPrompt": {
+    "message": "提示词模板"
+  },
+  "optPromptHint": {
+    "message": "支持占位符：{{sourceLang}} {{targetLang}} {{text}}"
+  },
+  "langAutoDetect": {
+    "message": "自动检测"
+  },
+  "langChinese": { "message": "中文" },
+  "langEnglish": { "message": "英文" },
+  "langJapanese": { "message": "日文" },
+  "langKorean": { "message": "韩文" },
+  "langFrench": { "message": "法文" },
+  "langGerman": { "message": "德文" },
+  "langSpanish": { "message": "西班牙文" },
+  "langRussian": { "message": "俄文" },
+  "ctTranslating": {
+    "message": "翻译中…"
+  },
+  "ctEmptyTranslation": {
+    "message": "(空译文)"
+  },
+  "ctErrorPrefix": {
+    "message": "❌ 翻译失败："
+  },
+  "ctUnknownError": {
+    "message": "未知错误"
+  },
+  "bgUnrecognizedResponse": {
+    "message": "未识别的 API 返回格式"
+  },
+  "ctNoResponse": {
+    "message": "无响应"
+  },
+  "ctNoSelection": {
+    "message": "无选区"
+  },
+  "ctNoContent": {
+    "message": "未在页面上找到可翻译的正文内容。"
+  },
+  "ctTooMany": {
+    "message": "页面包含 $COUNT$ 个段落，翻译可能耗时较长，是否继续？"
+  },
+  "ctSelectFirst": {
+    "message": "请先选中要翻译的文本。"
+  },
+  "ctErrorAlert": {
+    "message": "翻译出错："
+  },
+  "progressLabel": {
+    "message": "LLM 翻译中…"
+  },
+  "promptDefault": {
+    "message": "你是专业翻译。将以下{{sourceLang}}文本翻译为{{targetLang}}，仅输出译文，不要任何解释或前后缀，保留原文的格式、标点与专有名词。\n\n原文：\n{{text}}"
+  }
+}

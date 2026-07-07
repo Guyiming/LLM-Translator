@@ -1,0 +1,178 @@
+{
+  "extName": {
+    "message": "LLM Translator"
+  },
+  "extDesc": {
+    "message": "Bilingual webpage translation powered by LLM API(Anthropic, OpenAI, Deepseek, GML). Keeps the original text and inserts the translation below it."
+  },
+  "actionTitle": {
+    "message": "LLM Translator"
+  },
+  "ctxTranslateSelection": {
+    "message": "LLM Translate: Selection"
+  },
+  "ctxTranslatePage": {
+    "message": "LLM Translate: Whole Page"
+  },
+  "popupTitle": {
+    "message": "LLM Translator"
+  },
+  "popupTranslatePage": {
+    "message": "Translate Page"
+  },
+  "popupTranslateSelection": {
+    "message": "Translate Selection"
+  },
+  "popupSettings": {
+    "message": "Settings"
+  },
+  "popupConfigured": {
+    "message": "API configured. Ready to translate."
+  },
+  "popupNotConfigured": {
+    "message": "API Key not configured. Please open Settings first."
+  },
+  "popupGoSettings": {
+    "message": "Open Settings"
+  },
+  "popupNoBackend": {
+    "message": "Cannot reach background. Please retry."
+  },
+  "popupUnsupportedPage": {
+    "message": "This page cannot be translated (browser-internal page)."
+  },
+  "popupTranslateFailed": {
+    "message": "Could not translate on this page: "
+  },
+  "optTitle": {
+    "message": "LLM Translator - Settings"
+  },
+  "optSubtitle": {
+    "message": "Configure an Anthropic-compatible API to enable translation"
+  },
+  "optApiSection": {
+    "message": "API Connection"
+  },
+  "optBaseUrl": {
+    "message": "Base URL"
+  },
+  "optBaseUrlHint": {
+    "message": "Anthropic official or a compatible proxy URL"
+  },
+  "optApiKey": {
+    "message": "API Key"
+  },
+  "optApiKeyHint": {
+    "message": "Stored locally, never uploaded"
+  },
+  "optModel": {
+    "message": "Model"
+  },
+  "optApiVersion": {
+    "message": "API Version"
+  },
+  "optSave": {
+    "message": "Save"
+  },
+  "optTest": {
+    "message": "Test Connection"
+  },
+  "optSaved": {
+    "message": "Saved"
+  },
+  "optTesting": {
+    "message": "Testing…"
+  },
+  "optTestOk": {
+    "message": "Connection OK"
+  },
+  "optTestFail": {
+    "message": "Connection failed"
+  },
+  "optTestReplyPrefix": {
+    "message": "✅ Connected. Model replied: "
+  },
+  "optTestFailPrefix": {
+    "message": "❌ Failed: "
+  },
+  "optNeedApiKey": {
+    "message": "Please enter the API Key first"
+  },
+  "optTranslateSection": {
+    "message": "Translation Settings"
+  },
+  "optTargetLang": {
+    "message": "Target Language"
+  },
+  "optSourceLang": {
+    "message": "Source Language"
+  },
+  "optMaxTokens": {
+    "message": "Max Tokens"
+  },
+  "optMaxTokensHint": {
+    "message": "Max output per paragraph"
+  },
+  "optTemperature": {
+    "message": "Temperature"
+  },
+  "optConcurrency": {
+    "message": "Concurrency"
+  },
+  "optPrompt": {
+    "message": "Prompt Template"
+  },
+  "optPromptHint": {
+    "message": "Placeholders: {{sourceLang}} {{targetLang}} {{text}}"
+  },
+  "langAutoDetect": {
+    "message": "Auto Detect"
+  },
+  "langChinese": { "message": "Chinese" },
+  "langEnglish": { "message": "English" },
+  "langJapanese": { "message": "Japanese" },
+  "langKorean": { "message": "Korean" },
+  "langFrench": { "message": "French" },
+  "langGerman": { "message": "German" },
+  "langSpanish": { "message": "Spanish" },
+  "langRussian": { "message": "Russian" },
+  "ctTranslating": {
+    "message": "Translating…"
+  },
+  "ctEmptyTranslation": {
+    "message": "(empty translation)"
+  },
+  "ctErrorPrefix": {
+    "message": "❌ Translation failed: "
+  },
+  "ctUnknownError": {
+    "message": "unknown error"
+  },
+  "bgUnrecognizedResponse": {
+    "message": "Unrecognized API response format"
+  },
+  "ctNoResponse": {
+    "message": "no response"
+  },
+  "ctNoSelection": {
+    "message": "no selection"
+  },
+  "ctNoContent": {
+    "message": "No translatable content found on this page."
+  },
+  "ctTooMany": {
+    "message": "This page has $COUNT$ paragraphs. Translation may take a while. Continue?"
+  },
+  "ctSelectFirst": {
+    "message": "Please select some text to translate first."
+  },
+  "ctErrorAlert": {
+    "message": "Translation error: "
+  },
+  "progressLabel": {
+    "message": "LLM translating… "
+  },
+  "promptDefault": {
+    "message": "You are a professional translator. Translate the following {{sourceLang}} text into {{targetLang}}. Output only the translation, with no explanations, prefixes or suffixes. Preserve the original formatting, punctuation and proper nouns.\n\nOriginal:\n{{text}}"
+  }
+}

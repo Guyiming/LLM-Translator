@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title data-i18n="optTitle">AI 翻译助手 - 设置</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: -apple-system, "Segoe UI", Roboto, "Microsoft YaHei", sans-serif;
+      margin: 0;
+      padding: 40px 20px;
+      background: #f5f6f8;
+      color: #2c3e50;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 680px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 10px;
+      padding: 32px 40px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+    h1 {
+      margin: 0 0 8px;
+      font-size: 22px;
+    }
+    .subtitle {
+      color: #888;
+      font-size: 13px;
+      margin-bottom: 28px;
+    }
+    .field {
+      margin-bottom: 22px;
+    }
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 6px;
+      font-size: 14px;
+    }
+    .hint {
+      color: #999;
+      font-size: 12px;
+      font-weight: normal;
+      margin-left: 6px;
+    }
+    input[type="text"], input[type="password"], select, textarea {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1px solid #d8dde3;
+      border-radius: 6px;
+      font-size: 14px;
+      font-family: inherit;
+      background: #fff;
+      transition: border-color 0.15s;
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: #4a90d9;
+    }
+    textarea {
+      min-height: 110px;
+      resize: vertical;
+      font-family: "Cascadia Code", Consolas, monospace;
+      font-size: 13px;
+    }
+    .row {
+      display: flex;
+      gap: 16px;
+    }
+    .row .field { flex: 1; }
+    .actions {
+      margin-top: 12px;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    button {
+      padding: 10px 22px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .btn-primary {
+      background: #4a90d9;
+      color: #fff;
+    }
+    .btn-primary:hover { background: #3a7ec1; }
+    .btn-secondary {
+      background: #eee;
+      color: #444;
+    }
+    .btn-secondary:hover { background: #e0e0e0; }
+    .status {
+      font-size: 13px;
+      color: #27ae60;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .status.show { opacity: 1; }
+    .status.error { color: #c0392b; }
+    .test-area {
+      margin-top: 8px;
+      padding: 12px;
+      background: #f9fafb;
+      border-radius: 6px;
+      border: 1px dashed #d8dde3;
+      font-size: 13px;
+      display: none;
+    }
+    .test-area.show { display: block; }
+    hr {
+      border: none;
+      border-top: 1px solid #eee;
+      margin: 28px 0;
+    }
+    .section-title {
+      font-size: 15px;
+      font-weight: 600;
+      margin: 0 0 16px;
+      color: #4a90d9;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 data-i18n="popupTitle"></h1>
+    <div class="subtitle" data-i18n="optSubtitle"></div>
+
+    <div class="section-title" data-i18n="optApiSection"></div>
+
+    <div class="field">
+      <label><span data-i18n="optBaseUrl"></span> <span class="hint" data-i18n="optBaseUrlHint"></span></label>
+      <input type="text" id="baseUrl" placeholder="https://api.anthropic.com">
+    </div>
+
+    <div class="field">
+      <label><span data-i18n="optApiKey"></span> <span class="hint" data-i18n="optApiKeyHint"></span></label>
+      <input type="password" id="apiKey" placeholder="sk-ant-...">
+    </div>
+
+    <div class="row">
+      <div class="field">
+        <label data-i18n="optModel"></label>
+        <input type="text" id="model" placeholder="claude-sonnet-5">
+      </div>
+      <div class="field">
+        <label data-i18n="optApiVersion"></label>
+        <input type="text" id="apiVersion" value="2023-06-01" placeholder="2023-06-01">
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="btn-primary" id="save" data-i18n="optSave"></button>
+      <button class="btn-secondary" id="test" data-i18n="optTest"></button>
+      <span class="status" id="status"></span>
+    </div>
+
+    <div class="test-area" id="testResult"></div>
+
+    <hr>
+
+    <div class="section-title" data-i18n="optTranslateSection"></div>
+
+    <div class="row">
+      <div class="field">
+        <label data-i18n="optTargetLang"></label>
+        <select id="targetLang">
+          <option value="zh" data-i18n="langChinese"></option>
+          <option value="en" data-i18n="langEnglish"></option>
+          <option value="ja" data-i18n="langJapanese"></option>
+          <option value="ko" data-i18n="langKorean"></option>
+          <option value="fr" data-i18n="langFrench"></option>
+          <option value="de" data-i18n="langGerman"></option>
+          <option value="es" data-i18n="langSpanish"></option>
+          <option value="ru" data-i18n="langRussian"></option>
+        </select>
+      </div>
+      <div class="field">
+        <label data-i18n="optSourceLang"></label>
+        <select id="sourceLang">
+          <option value="auto" data-i18n="langAutoDetect"></option>
+          <option value="en" data-i18n="langEnglish"></option>
+          <option value="zh" data-i18n="langChinese"></option>
+          <option value="ja" data-i18n="langJapanese"></option>
+          <option value="ko" data-i18n="langKorean"></option>
+          <option value="fr" data-i18n="langFrench"></option>
+          <option value="de" data-i18n="langGerman"></option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="field">
+        <label><span data-i18n="optMaxTokens"></span> <span class="hint" data-i18n="optMaxTokensHint"></span></label>
+        <input type="text" id="maxTokens" value="1024">
+      </div>
+      <div class="field">
+        <label data-i18n="optTemperature"></label>
+        <input type="text" id="temperature" value="0.3">
+      </div>
+      <div class="field">
+        <label data-i18n="optConcurrency"></label>
+        <input type="text" id="concurrency" value="3">
+      </div>
+    </div>
+
+    <div class="field">
+      <label><span data-i18n="optPrompt"></span> <span class="hint" data-i18n="optPromptHint"></span></label>
+      <textarea id="promptTemplate"></textarea>
+    </div>
+
+    <div class="actions">
+      <button class="btn-primary" id="save2" data-i18n="optSave"></button>
+    </div>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>

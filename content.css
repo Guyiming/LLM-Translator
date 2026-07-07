@@ -1,0 +1,94 @@
+/* ========================================================================
+ * AI 翻译助手 - 译文样式
+ * 在原文下方插入译文，浅灰文字 + 左侧彩色边框 + 轻微缩进
+ * ====================================================================== */
+
+.ai-translation {
+  display: block;
+  margin: 4px 0 12px;
+  padding: 6px 12px;
+  border-left: 3px solid #4a90d9;
+  color: #555;
+  background: #fafafa;
+  font-size: 0.95em;
+  line-height: 1.6;
+  border-radius: 0 4px 4px 0;
+  white-space: normal;
+  word-break: break-word;
+  max-width: 100%;
+  box-sizing: border-box;
+  transition: background 0.2s;
+}
+
+.ai-translation:hover {
+  background: #f0f4f8;
+}
+
+/* 加载态 */
+.ai-translation--loading {
+  color: #999;
+  font-style: italic;
+  background: #f5f5f5;
+  border-left-color: #bbb;
+}
+
+/* 错误态 */
+.ai-translation--error {
+  color: #c0392b;
+  background: #fdf0ed;
+  border-left-color: #c0392b;
+  font-size: 0.9em;
+}
+
+/* 选中翻译容器 */
+.ai-translation-group {
+  margin: 8px 0;
+  padding: 4px 0;
+}
+
+/* 行内选中译文（span 形式） */
+span.ai-translation {
+  display: inline-block;
+  margin: 0 4px;
+  padding: 2px 8px;
+  border-left-width: 2px;
+  font-size: 0.95em;
+}
+
+/* 进度浮层 */
+#ai-translator-progress {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 2147483647;
+  background: #2c3e50;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  display: none;
+  pointer-events: none;
+}
+
+/* 暗色模式自适应 */
+@media (prefers-color-scheme: dark) {
+  .ai-translation {
+    color: #b0b0b0;
+    background: #2a2a2a;
+    border-left-color: #4a90d9;
+  }
+  .ai-translation:hover {
+    background: #333;
+  }
+  .ai-translation--loading {
+    color: #777;
+    background: #262626;
+    border-left-color: #666;
+  }
+  .ai-translation--error {
+    color: #ff8a7a;
+    background: #3a2422;
+  }
+}

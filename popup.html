@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, "Segoe UI", Roboto, "Microsoft YaHei", sans-serif;
+      width: 240px;
+      padding: 16px;
+      background: #fff;
+      color: #2c3e50;
+    }
+    h2 {
+      font-size: 15px;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: #bbb;
+    }
+    .dot.ok { background: #27ae60; }
+    .dot.warn { background: #e67e22; }
+    button {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 8px;
+      border: none;
+      border-radius: 6px;
+      font-size: 13px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.15s;
+    }
+    .btn-primary {
+      background: #4a90d9;
+      color: #fff;
+    }
+    .btn-primary:hover { background: #3a7ec1; }
+    .btn-secondary {
+      background: #f0f2f5;
+      color: #444;
+    }
+    .btn-secondary:hover { background: #e4e7eb; }
+    .config-hint {
+      font-size: 12px;
+      color: #999;
+      margin-top: 10px;
+      line-height: 1.5;
+    }
+    .config-hint a {
+      color: #4a90d9;
+      cursor: pointer;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <h2><span class="dot" id="statusDot"></span> <span data-i18n="popupTitle"></span></h2>
+  <button class="btn-primary" id="translatePage" data-i18n="popupTranslatePage"></button>
+  <button class="btn-secondary" id="translateSelection" data-i18n="popupTranslateSelection"></button>
+  <button class="btn-secondary" id="openOptions" data-i18n="popupSettings"></button>
+  <div class="config-hint" id="hint"></div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
