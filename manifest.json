@@ -47,8 +47,11 @@
   },
   "browser_specific_settings": {
     "gecko": {
-      "id": "aitranslator@local.extension",
-      "strict_min_version": "115.0"
+      "id": "llm-translator@guyiming",
+      "strict_min_version": "115.0",
+      "data_collection_permissions": {
+        "required": ["none"]
+      }
     }
   }
 }
