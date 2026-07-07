@@ -3,7 +3,7 @@
     "message": "LLM Translator"
   },
   "extDesc": {
-    "message": "Bilingual webpage translation powered by LLM API(Anthropic, OpenAI, Deepseek, GML). Keeps the original text and inserts the translation below it."
+    "message": "Bilingual webpage translation powered by LLM API(Anthropic, OpenAI, Deepseek, GLM). Keeps the original text and inserts the translation below it."
   },
   "actionTitle": {
     "message": "LLM Translator"

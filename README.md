@@ -1,6 +1,6 @@
-# AI 翻译助手（Firefox 扩展）
+# LLM Translator（Firefox 扩展）
 
-基于 **Anthropic 兼容 API** 的网页双语对照翻译扩展。保留原文，在原文下方插入译文（浅灰文字 + 左侧蓝色边框）。
+基于 **LLM API**（Anthropic / OpenAI / DeepSeek / GLM 等兼容接口）的网页双语对照翻译扩展。保留原文，在原文下方插入译文（浅灰文字 + 左侧蓝色边框）。
 
 ## 功能
 
@@ -8,8 +8,8 @@
 - ✅ 选中文本翻译：右键 / popup 翻译选中内容
 - ✅ 双语对照样式（浅灰 + 左边框 + 缩进），支持暗色模式自适应
 - ✅ 并发翻译 + 进度浮层
-- ✅ 用户自定义 `ANTHROPIC_BASE_URL` / API Key / 模型 / 目标语言 / Prompt
-- ✅ 兼容官方 Anthropic API 与第三方代理（兼容 OpenAI 风格返回）
+- ✅ 用户自定义 Base URL / API Key / 模型 / 目标语言 / Prompt
+- ✅ 兼容 Anthropic、OpenAI、DeepSeek、GLM 等 API 及第三方代理（兼容 OpenAI 风格返回）
 - ✅ 中英文界面自动切换（跟随浏览器 UI 语言：`zh*` 中文，其它英文）
 
 ## 安装（Firefox）
@@ -36,8 +36,8 @@
 
 | 操作 | 动作 |
 |------|------|
-| 翻译整页 | 点击工具栏图标 →「翻译整页」；或右键页面 →「AI 翻译：整页」 |
-| 翻译选中 | 选中文字 → 点击工具栏图标 →「翻译选中内容」；或右键 →「AI 翻译：选中内容」 |
+| 翻译整页 | 点击工具栏图标 →「翻译整页」；或右键页面 →「LLM 翻译：整页」 |
+| 翻译选中 | 选中文字 → 点击工具栏图标 →「翻译选中内容」；或右键 →「LLM 翻译：选中内容」 |
 
 翻译过程中右上角显示进度（已翻译/总段数）。译文以浅灰带左边框样式插入到原文下方。
 
@@ -66,12 +66,13 @@ aitranslator/
 
 目标语言 / 源语言在配置页以代码存储（`zh`/`en`/`auto`…），调用 API 时按当前界面语言映射为本地化名称填入 prompt。
 
-## 关于 ANTHROPIC_BASE_URL
+## 关于 Base URL
 
-扩展在选项页读取用户填写的 Base URL，归一化后拼接 `/v1/messages` 调用 Anthropic Messages API。这意味着：
+扩展在选项页读取用户填写的 Base URL，归一化后拼接 `/v1/messages` 调用 LLM API（Anthropic Messages 风格，同时兼容 OpenAI 风格返回）。这意味着：
 
-- 官方 API：`https://api.anthropic.com`
-- 第三方 Anthropic 兼容代理：填代理完整地址即可
+- 官方 API：如 `https://api.anthropic.com`
+- 兼容服务：OpenAI / DeepSeek / GLM 等提供的兼容端点，填完整地址即可
+- 第三方代理：填代理完整地址即可（带不带 `/v1` 都行）
 - 不依赖本地 CLI，跨设备可用
 
 ## 备注

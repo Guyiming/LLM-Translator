@@ -1,5 +1,5 @@
 /* ========================================================================
- * AI 翻译助手 - Content Script
+ * LLM 翻译助手 - Content Script
  * 职责：
  *   1. 接收翻译指令（整页 / 选中）
  *   2. 识别正文段落
@@ -22,10 +22,10 @@
   };
 
   /* 已翻译标记，避免重复翻译 */
-  const TRANSLATED_ATTR = "data-ai-translated";
-  const TRANSLATION_CLASS = "ai-translation";
-  const TRANSLATION_LOADING_CLASS = "ai-translation--loading";
-  const TRANSLATION_ERROR_CLASS = "ai-translation--error";
+  const TRANSLATED_ATTR = "data-llm-translated";
+  const TRANSLATION_CLASS = "llm-translation";
+  const TRANSLATION_LOADING_CLASS = "llm-translation--loading";
+  const TRANSLATION_ERROR_CLASS = "llm-translation--error";
 
   /* ---------- 工具：生成唯一请求 id ---------- */
   let reqCounter = 0;
@@ -71,7 +71,7 @@
     const tag = el.tagName;
     if (SKIP_TAGS.has(tag)) return false;
     if (el.hasAttribute(TRANSLATED_ATTR)) return false;
-    if (el.closest(".ai-translation")) return false; // 不翻译已插入的译文
+    if (el.closest(".llm-translation")) return false; // 不翻译已插入的译文
     if (el.closest("[contenteditable='true']")) return false;
     const text = (el.innerText || "").trim();
     if (text.length < 1) return false;
@@ -168,7 +168,7 @@
   function showProgress(done, total) {
     if (!progressEl) {
       progressEl = document.createElement("div");
-      progressEl.id = "ai-translator-progress";
+      progressEl.id = "llm-translator-progress";
       document.documentElement.appendChild(progressEl);
     }
     progressEl.textContent = `${i18n("progressLabel")}${done}/${total}`;
@@ -299,7 +299,7 @@
     showProgress(0, blocks.length);
     // 在选区末尾插入一个容器，按序追加译文
     const container = document.createElement("div");
-    container.className = "ai-translation-group";
+    container.className = "llm-translation-group";
     if (sel && sel.rangeCount) {
       const r = sel.getRangeAt(0).cloneRange();
       r.collapse(false);

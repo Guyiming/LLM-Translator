@@ -1,9 +1,9 @@
 {
   "extName": {
-    "message": "LLM 翻译助手 (Anthropic API)"
+    "message": "LLM 翻译助手"
   },
   "extDesc": {
-    "message": "基于 Anthropic 兼容 API 的网页双语对照翻译。保留原文，在原文下方插入译文。"
+    "message": "基于 LLM（Anthropic、OpenAI、Deepseek、GLM等）的网页双语对照翻译。保留原文，在原文下方插入译文。"
   },
   "actionTitle": {
     "message": "LLM 翻译助手"

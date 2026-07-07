@@ -1,5 +1,5 @@
 /* ========================================================================
- * AI 翻译助手 - Background Service Script
+ * LLM 翻译助手 - Background Service Script
  * 职责：
  *   1. 管理右键菜单
  *   2. 接收 content script 的翻译请求，调用 Anthropic 兼容 API
