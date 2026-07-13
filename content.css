@@ -40,6 +40,14 @@
   font-size: 0.9em;
 }
 
+/* 已取消 */
+.llm-translation--cancelled {
+  color: #888;
+  background: #f5f5f5;
+  border-left-color: #aaa;
+  font-style: italic;
+}
+
 /* 选中翻译容器 */
 .llm-translation-group {
   margin: 8px 0;
@@ -69,7 +77,25 @@ span.llm-translation {
   font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
   display: none;
-  pointer-events: none;
+  align-items: center;
+  gap: 10px;
+  pointer-events: auto;
+}
+
+#llm-translator-progress button {
+  appearance: none;
+  margin: 0;
+  padding: 3px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: 4px;
+  color: #fff;
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}
+
+#llm-translator-progress button:hover {
+  background: rgba(255, 255, 255, 0.15);
 }
 
 /* 暗色模式自适应 */
@@ -90,5 +116,10 @@ span.llm-translation {
   .llm-translation--error {
     color: #ff8a7a;
     background: #3a2422;
+  }
+  .llm-translation--cancelled {
+    color: #888;
+    background: #262626;
+    border-left-color: #666;
   }
 }

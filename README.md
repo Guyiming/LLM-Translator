@@ -7,7 +7,7 @@
 - ✅ 整页翻译：识别正文段落，逐段在原文下方追加译文
 - ✅ 选中文本翻译：右键 / popup 翻译选中内容
 - ✅ 双语对照样式（浅灰 + 左边框 + 缩进），支持暗色模式自适应
-- ✅ 并发翻译 + 进度浮层
+- ✅ 并发翻译 + 进度浮层，可随时取消
 - ✅ 用户自定义 Base URL / API Key / 模型 / 目标语言 / Prompt
 - ✅ 兼容 Anthropic、OpenAI、DeepSeek、GLM 等 API 及第三方代理（兼容 OpenAI 风格返回）
 - ✅ 中英文界面自动切换（跟随浏览器 UI 语言：`zh*` 中文，其它英文）
@@ -28,7 +28,7 @@
    - **API 协议**：根据服务商选择
      - `Anthropic 风格` → 端点 `/v1/messages`，用 `x-api-key` 认证（Anthropic 官方及兼容代理）
      - `OpenAI 风格` → 端点 `/v1/chat/completions`，用 `Authorization: Bearer` 认证（OpenAI、DeepSeek、GLM、one-api 等）
-   - **Base URL**：API 服务地址（带不带 `/v1` 都行，扩展会自动归一化）。仅存储在本地，不上传
+   - **Base URL**：API 服务地址（可填写服务根地址、以版本号结尾的地址或完整端点）。仅存储在本地，不上传
    - **API Key**：对应服务的密钥
    - **模型**：如 `claude-sonnet-5`、`gpt-4o`、`deepseek-chat`、`glm-4-plus` 等
    - **API Version**：仅 Anthropic 风格生效，默认 `2023-06-01`
@@ -60,7 +60,7 @@
 ```
 aitranslator/
 ├── manifest.json        扩展清单（MV3, Firefox）
-├── background.js        后台：右键菜单 + Anthropic API 调用
+├── background.js        后台：右键菜单 + LLM API 调用与请求管理
 ├── content.js           页面注入：段落识别 + 双语对照渲染
 ├── content.css          译文样式
 ├── options.html/js      配置页
@@ -82,15 +82,16 @@ aitranslator/
 
 ## 关于 Base URL
 
-扩展在选项页读取用户填写的 Base URL，归一化（去掉结尾 `/` 与 `/v1`）后，按所选 **API 协议** 拼接端点调用 LLM API：
+扩展按所选 **API 协议** 智能补全用户填写的 Base URL：
 
-- **Anthropic 风格** → `POST {base}/v1/messages`，请求头 `x-api-key` + `anthropic-version`，解析 `content[].text`
-- **OpenAI 风格** → `POST {base}/v1/chat/completions`，请求头 `Authorization: Bearer`，解析 `choices[0].message.content`
+- **Anthropic 风格** → 默认补全 `/v1/messages`，请求头 `x-api-key` + `anthropic-version`，解析 `content[].text`
+- **OpenAI 风格** → 默认补全 `/v1/chat/completions`，请求头 `Authorization: Bearer`，解析 `choices[0].message.content`
 
-两种风格都做了返回格式的交叉兼容回退，方便接入各类代理。
+若地址已以 `/v1`、`/v4` 等版本号结尾，只追加具体端点；若已经是完整的 `/messages` 或 `/chat/completions` 地址则直接使用。两种风格都做了返回格式的交叉兼容回退，方便接入各类代理。
 
-- 第三方代理：填代理完整地址即可（带不带 `/v1` 都行）
+- 第三方代理：可填写代理根地址、版本地址或完整端点
 - 不依赖本地 CLI，跨设备可用
+- API 请求 45 秒超时；对 429 和 5xx 错误最多自动重试 2 次，并遵循 `Retry-After`
 
 ## 备注
 

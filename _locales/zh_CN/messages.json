@@ -176,7 +176,10 @@
     "message": "未在页面上找到可翻译的正文内容。"
   },
   "ctTooMany": {
-    "message": "页面包含 $COUNT$ 个段落，翻译可能耗时较长，是否继续？"
+    "message": "页面包含 $COUNT$ 个段落，翻译可能耗时较长，是否继续？",
+    "placeholders": {
+      "COUNT": { "content": "$1" }
+    }
   },
   "ctSelectFirst": {
     "message": "请先选中要翻译的文本。"
@@ -185,7 +188,28 @@
     "message": "翻译出错："
   },
   "progressLabel": {
-    "message": "LLM 翻译中…"
+    "message": "LLM 翻译中… "
+  },
+  "ctCancel": {
+    "message": "取消"
+  },
+  "ctCancelled": {
+    "message": "翻译已取消"
+  },
+  "bgCancelled": {
+    "message": "请求已取消"
+  },
+  "bgRequestTimeout": {
+    "message": "API 请求超时"
+  },
+  "bgMissingApiKey": {
+    "message": "尚未配置 API Key"
+  },
+  "bgMissingBaseUrl": {
+    "message": "尚未配置 Base URL"
+  },
+  "bgMissingModel": {
+    "message": "尚未配置模型"
   },
   "promptDefault": {
     "message": "你是专业翻译。将以下{{sourceLang}}文本翻译为{{targetLang}}，仅输出译文，不要任何解释或前后缀，保留原文的格式、标点与专有名词。\n\n原文：\n{{text}}"

@@ -176,7 +176,10 @@
     "message": "No translatable content found on this page."
   },
   "ctTooMany": {
-    "message": "This page has $COUNT$ paragraphs. Translation may take a while. Continue?"
+    "message": "This page has $COUNT$ paragraphs. Translation may take a while. Continue?",
+    "placeholders": {
+      "COUNT": { "content": "$1" }
+    }
   },
   "ctSelectFirst": {
     "message": "Please select some text to translate first."
@@ -186,6 +189,27 @@
   },
   "progressLabel": {
     "message": "LLM translating… "
+  },
+  "ctCancel": {
+    "message": "Cancel"
+  },
+  "ctCancelled": {
+    "message": "Translation cancelled"
+  },
+  "bgCancelled": {
+    "message": "Request cancelled"
+  },
+  "bgRequestTimeout": {
+    "message": "API request timed out"
+  },
+  "bgMissingApiKey": {
+    "message": "API Key is not configured"
+  },
+  "bgMissingBaseUrl": {
+    "message": "Base URL is not configured"
+  },
+  "bgMissingModel": {
+    "message": "Model is not configured"
   },
   "promptDefault": {
     "message": "You are a professional translator. Translate the following {{sourceLang}} text into {{targetLang}}. Output only the translation, with no explanations, prefixes or suffixes. Preserve the original formatting, punctuation and proper nouns.\n\nOriginal:\n{{text}}"

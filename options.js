@@ -98,56 +98,16 @@ async function test() {
   statusEl.classList.remove("error");
   statusEl.classList.add("show");
 
-  const baseUrl = (cfg.baseUrl || DEFAULTS.baseUrl)
-    .trim()
-    .replace(/\/+$/, "")
-    .replace(/\/v1$/i, "");
-
-  const protocol = (cfg.protocol || "anthropic").toLowerCase();
-  let url, headers;
-  const body = {
-    model: cfg.model,
-    max_tokens: 64,
-    messages: [{ role: "user", content: "Reply with: OK" }],
-  };
-
-  if (protocol === "openai") {
-    url = baseUrl + "/v1/chat/completions";
-    headers = {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${cfg.apiKey}`,
-    };
-  } else {
-    url = baseUrl + "/v1/messages";
-    headers = {
-      "Content-Type": "application/json",
-      "x-api-key": cfg.apiKey,
-      "anthropic-version": cfg.apiVersion || "2023-06-01",
-    };
-  }
-
   try {
-    const resp = await fetch(url, {
-      method: "POST",
-      headers,
-      body: JSON.stringify(body),
+    const response = await browser.runtime.sendMessage({
+      type: "TEST_CONNECTION",
+      config: cfg,
     });
-
-    const data = await resp.json();
-    if (!resp.ok) {
-      const msg = data.error?.message || data.message || `HTTP ${resp.status}`;
-      throw new Error(msg);
-    }
-
-    let reply = "";
-    if (Array.isArray(data.content)) {
-      reply = data.content.map((c) => c.text || "").join("");
-    } else if (data.choices && data.choices[0]) {
-      reply = data.choices[0].message?.content || data.choices[0].text || "";
-    }
+    if (!response?.ok) throw new Error(response?.error || "Unknown error");
 
     resultEl.textContent =
-      browser.i18n.getMessage("optTestReplyPrefix") + String(reply).slice(0, 80);
+      browser.i18n.getMessage("optTestReplyPrefix") +
+      String(response.translation || "").slice(0, 80);
     resultEl.style.color = "#27ae60";
     statusEl.textContent = browser.i18n.getMessage("optTestOk");
     statusEl.classList.remove("error");

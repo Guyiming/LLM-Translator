@@ -16,6 +16,19 @@ async function getActiveTab() {
   return tabs[0];
 }
 
+async function getSelectionText(tabId) {
+  try {
+    const results = await browser.scripting.executeScript({
+      target: { tabId },
+      func: () => window.getSelection()?.toString() || "",
+    });
+    return results?.[0]?.result || "";
+  } catch {
+    // content script 仍会再从页面选区读取一次。
+    return "";
+  }
+}
+
 /* ---------- 检查配置状态 ---------- */
 async function checkConfig() {
   const dot = document.getElementById("statusDot");
@@ -27,12 +40,12 @@ async function checkConfig() {
       hint.textContent = browser.i18n.getMessage("popupConfigured");
     } else {
       dot.classList.add("warn");
-      hint.innerHTML =
-        browser.i18n.getMessage("popupNotConfigured") +
-        ' <a id="goConfig">' +
-        browser.i18n.getMessage("popupGoSettings") +
-        "</a>";
-      document.getElementById("goConfig").addEventListener("click", openOptions);
+      hint.textContent = browser.i18n.getMessage("popupNotConfigured") + " ";
+      const link = document.createElement("a");
+      link.id = "goConfig";
+      link.textContent = browser.i18n.getMessage("popupGoSettings");
+      link.addEventListener("click", openOptions);
+      hint.appendChild(link);
     }
   } catch {
     dot.classList.add("warn");
@@ -55,19 +68,27 @@ async function sendTranslate(type) {
     alert(browser.i18n.getMessage("popupUnsupportedPage"));
     return;
   }
+  const message = { type };
+  if (type === "TRANSLATE_SELECTION") {
+    message.selectionText = await getSelectionText(tab.id);
+  }
   try {
-    await browser.tabs.sendMessage(tab.id, { type });
+    await browser.tabs.sendMessage(tab.id, message);
     window.close();
     return;
   } catch (e) {
     // content script 可能未注入（如刚加载的页面），尝试用 scripting API 手动注入
   }
   try {
+    await browser.scripting.insertCSS({
+      target: { tabId: tab.id },
+      files: ["content.css"],
+    });
     await browser.scripting.executeScript({
       target: { tabId: tab.id },
       files: ["content.js"],
     });
-    await browser.tabs.sendMessage(tab.id, { type });
+    await browser.tabs.sendMessage(tab.id, message);
     window.close();
   } catch (e2) {
     alert(browser.i18n.getMessage("popupTranslateFailed") + (e2.message || e2));
